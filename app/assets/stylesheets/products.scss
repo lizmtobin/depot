@@ -23,14 +23,36 @@
   td.image {
     //Hide on mobile
     display: none;
+
+    //Assume anything bigger than 30em is non-mobile & can fit image
+
+    @media (min-width: 30em) {
+      display: block;
+      img {
+        height: 11.3em;
+      }
+    }
   }
 
-  //Assume anything bigger than 30em is non-mobile & can fit image
+  td.description {
+    h1 {
+      font-size: 1.4em;
+    }
+  }
 
-  @media (min-width: 30em) {
-    display: block;
-    img {
-      height: 11.3em;
+  td.actions {
+    ul {
+      padding: 0;
+      list-style: none;
+      li {
+        padding: 0.5em 0.5em;
+      }
+    }
+  }
+
+  tfoot {
+    td {
+      padding: 0.5em 0;
     }
   }
 }
