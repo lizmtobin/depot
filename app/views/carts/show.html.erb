@@ -1,4 +1,14 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<aside id="notice"><%= notice %></aside>
+<% end%>
+<ul>
+<h2>CART</h2>
+<% @cart.line_items.each do |item| %>
+    <li><%= item.product.title %></li>
+<% end %>
+</ul>
+
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
-<%= link_to 'Back', carts_path %>
+<%= link_to 'Back', carts_path %> 
+
