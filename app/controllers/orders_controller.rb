@@ -26,13 +26,17 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
+    @order.add_line_items_from_cart(@cart) # add_line_items_from_cart method is defined in app/models/order.rb
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+        Cart.destroy(session[:cart_id]) # destroy the cart after the order is saved
+        session[:cart_id] = nil # set the session[:cart_id] to nil
+        # redirect to the store index page with a notice that the order was successfully created
+        format.html { redirect_to store_index_url, notice: "Thank you for your order."}
         format.json { render :show, status: :created, location: @order }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
