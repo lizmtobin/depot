@@ -1,5 +1,6 @@
-class CombineItemsInCart < ActiveRecord::Migration[6.1]
+# frozen_string_literal: true
 
+class CombineItemsInCart < ActiveRecord::Migration[6.1]
   def up
     # replace multiple items for a single product in a cart with a
     # single item
@@ -8,24 +9,24 @@ class CombineItemsInCart < ActiveRecord::Migration[6.1]
       sums = cart.line_items.group(:product_id).sum(:quantity)
 
       sums.each do |product_id, quantity|
-        if quantity > 1
-          # remove individual items
-          cart.line_items.where(product_id: product_id).delete_all
+        next unless quantity > 1
 
-          # replace with a single item
-          item = cart.line_items.build(product_id: product_id)
-          item.quantity = quantity
-          item.save!
-        end
+        # remove individual items
+        cart.line_items.where(product_id: product_id).delete_all
+
+        # replace with a single item
+        item = cart.line_items.build(product_id: product_id)
+        item.quantity = quantity
+        item.save!
       end
     end
   end
 
   def down
     # split items with quantity>1 into multiple items
-    LineItem.where("quantity>1").each do |line_item|
+    LineItem.where('quantity>1').each do |line_item|
       # add individual items
-      line_item.quantity.times do 
+      line_item.quantity.times do
         LineItem.create(
           cart_id: line_item.cart_id,
           product_id: line_item.product_id,
