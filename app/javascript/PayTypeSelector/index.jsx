@@ -1,7 +1,14 @@
 import React from "react";
 
 class PayTypeSelector extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onPayTypeSelected = this.onPayTypeSelected.bind(this);
+    this.state = { selectedPayType: null };
+  }
+
   onPayTypeSelected = (event) => {
+    this.setState({ selectedPayType: event.target.value });
     console.log(event.target.value);
   }
   render() {
