@@ -6,9 +6,9 @@ class OrderMailer < ApplicationMailer
   #   en.order_mailer.receieved.subject
   #
   def receieved
-    @greeting = "Hi"
+    @order = order
 
-    mail to: "to@example.org"
+    mail to: order.email, subject: 'Pragmatic Store Order Confirmation'
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

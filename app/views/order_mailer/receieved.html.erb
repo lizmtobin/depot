@@ -1,5 +1,13 @@
-<h1>Order#receieved</h1>
+Dear <%= @order.name%>
 
-<p>
-  <%= @greeting %>, find me in app/views/order_mailer/receieved.html.erb
-</p>
+Thank you for your order. We will process it as soon as possible.
+
+Your order details are as follows:
+
+<% @order.line_items.each do |item| %>
+  <%= item.quantity %> x <%= item.product.title %>
+<% end %>
+
+Total: <%= @order.total_price %>
+
+Thank you for shopping with us!
